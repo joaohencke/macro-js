@@ -1,0 +1,13 @@
+{
+  "name": "@macro/babel",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.43.0"
+  }
+}
