@@ -2,12 +2,16 @@
   "name": "@macro/core",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "build": "babel . --out-file dist/macro.core.js --minified --ignore 'babel.config.js' "
+  },
   "dependencies": {
     "robotjs": "^0.6.0"
   },
   "devDependencies": {
-    "@macro/babel": "*",
-    "@babel/core": "^7.9.6"
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@macro/babel": "*"
   },
   "license": "MIT",
   "private": true
