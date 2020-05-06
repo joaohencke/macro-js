@@ -22,7 +22,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "0fb57fa6fec3fae9b6c0";
+/******/ 	var hotCurrentHash = "ad20b574988dabc1bc13";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -818,6 +818,167 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "../core/dance.js":
+/*!************************!*\
+  !*** ../core/dance.js ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _robotjs = __webpack_require__(/*! robotjs */ "robotjs");
+
+var _robotjs2 = _interopRequireDefault(_robotjs);
+
+var _wait = __webpack_require__(/*! ./wait */ "../core/wait.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const dance = async () => {
+  _robotjs2.default.keyTap('right', 'command');
+
+  await (0, _wait.wait)(600);
+
+  _robotjs2.default.keyTap('left', 'command');
+
+  await (0, _wait.wait)(600);
+
+  _robotjs2.default.keyTap('down', 'command');
+
+  await (0, _wait.wait)(600);
+
+  _robotjs2.default.keyTap('up', 'command');
+};
+
+exports.default = {
+  pattern: /DANCE/i,
+  fn: dance
+};
+
+/***/ }),
+
+/***/ "../core/index.js":
+/*!************************!*\
+  !*** ../core/index.js ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.find = exports.parser = undefined;
+
+var _wait = __webpack_require__(/*! ./wait */ "../core/wait.js");
+
+var _wait2 = _interopRequireDefault(_wait);
+
+var _parser = __webpack_require__(/*! ./parser */ "../core/parser.js");
+
+var _parser2 = _interopRequireDefault(_parser);
+
+var _tap = __webpack_require__(/*! ./tap */ "../core/tap.js");
+
+var _tap2 = _interopRequireDefault(_tap);
+
+var _dance = __webpack_require__(/*! ./dance */ "../core/dance.js");
+
+var _dance2 = _interopRequireDefault(_dance);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const commands = {
+  tap: _tap2.default,
+  executables: [_wait2.default, _dance2.default]
+};
+
+const find = pattern => commands.executables.find(x => x.pattern.test(pattern));
+
+exports.default = commands;
+exports.parser = _parser2.default;
+exports.find = find;
+
+/***/ }),
+
+/***/ "../core/parser.js":
+/*!*************************!*\
+  !*** ../core/parser.js ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const parser = (commands = '') => commands.replace(/{/g, '').replace(/}/g, ',').split(',');
+
+exports.default = parser;
+
+/***/ }),
+
+/***/ "../core/tap.js":
+/*!**********************!*\
+  !*** ../core/tap.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _robotjs = __webpack_require__(/*! robotjs */ "robotjs");
+
+var _robotjs2 = _interopRequireDefault(_robotjs);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const tap = key => _robotjs2.default.keyTap(key);
+
+exports.default = tap;
+
+/***/ }),
+
+/***/ "../core/wait.js":
+/*!***********************!*\
+  !*** ../core/wait.js ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+exports.wait = wait;
+exports.default = {
+  fn: wait,
+  pattern: /WAITMS:?(\d{0,})/i
+};
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -828,36 +989,40 @@
 "use strict";
 
 
-const robot = __webpack_require__(/*! robotjs */ "robotjs"); // Type "Hello World".
+var _yargs = __webpack_require__(/*! yargs */ "yargs");
 
+var _yargs2 = _interopRequireDefault(_yargs);
 
-robot.typeString('Hello World'); // Press enter.
+var _core = __webpack_require__(/*! @macro/core */ "../core/index.js");
 
-robot.keyTap('enter'); // import yargs from 'yargs';
-// import robot from 'robotjs';
-// // {F2}{WAITMS:100}{F1}{WAITMS:60}{F1}{WAITMS:100}{F1}{WAITMS:100}{F1}{WAITMS:60}{WAITMS:60}{F3}{WAITMS:60}
-// const { argv } = yargs;
-// const commandArgs = '{a}'; // argv.command || process.env.COMMAND || '';
-// const commands = commandArgs
-//   .replace(/{/g, '')
-//   .replace(/}/g, ',')
-//   .split(',');
-// const AVAIABLE_COMMANDS = ['WAITMS'];
-// const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-// (async () => {
-//   for (let i = 0, l = commands.length; i < l; i += 1) {
-//     const command = commands[i];
-//     if (!command) continue; //eslint-disable-line
-//     if (AVAIABLE_COMMANDS.findIndex(x => command.includes(x)) >= 0) {
-//       // await sleep() // retrieve ms
-//     } else {
-//       // key press
-//       console.log(robot.getScreenSize());
-//       console.log(command.toLowerCase());
-//       console.log('exec');
-//     }
-//   }
-// })();
+var _core2 = _interopRequireDefault(_core);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const {
+  argv
+} = _yargs2.default;
+const COMMAND_ARGS = argv.command || process.env.COMMAND || '';
+const INSTRUCTION_DELIMITER = argv.delimiter || process.env.DELIMITER || '$$';
+const instructions = COMMAND_ARGS.split(INSTRUCTION_DELIMITER).map(str => (0, _core.parser)(str)).map(x => x.filter(y => !!y));
+console.log('starting');
+instructions.map(async commandGroup => {
+  for (let i = 0, l = commandGroup.length; i < l; i += 1) {
+    const command = commandGroup[i];
+    const action = (0, _core.find)(command);
+
+    if (action) {
+      console.log(`will exec custom action`, new Date());
+      const match = command.match(action.pattern);
+      await action.fn(match[1]); //eslint-disable-line
+    } else {
+      console.log(`will press ${command}`, new Date());
+
+      _core2.default.tap(command.toLowerCase());
+    }
+  }
+});
+console.log('finished', new Date());
 
 /***/ }),
 
@@ -881,6 +1046,17 @@ module.exports = __webpack_require__(/*! ./src/index.js */"./src/index.js");
 /***/ (function(module, exports) {
 
 module.exports = require("robotjs");
+
+/***/ }),
+
+/***/ "yargs":
+/*!************************!*\
+  !*** external "yargs" ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("yargs");
 
 /***/ })
 
