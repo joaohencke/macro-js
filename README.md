@@ -23,3 +23,7 @@ yarn start --command {F1}{WAITMS:1000}{F1}
 yarn start --command '{F1}{WAITMS:1000}{F1}|{WAITMS:3000}{F2}{WAITMS:3000}{F2}' --delimiter '|'
 ```
 
+# Avaiable commands
+* Key tap https://robotjs.io/docs/syntax#keys
+* {WAITMS} - wait for next command - time in milliseconds
+* {DANCE} - only macOS support yet (easy to make work in others)
