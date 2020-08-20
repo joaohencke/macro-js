@@ -2,6 +2,10 @@
   "name": "macro",
   "version": "1.0.0",
   "author": "Joao Hencke <joao.hencke@gmail.com>",
+  "scripts": {
+    "start:client": "node packages/client/dist/macro",
+    "build:client": "yarn workspace @macro/client build"
+  },
   "devDependencies": {
     "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.0.1",
